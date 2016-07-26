@@ -15,7 +15,7 @@
 
 ## Example usage
 
-    docker run \
+    docker run -i -t \
       -e FLUME_AGENT_NAME=someagent \
       -e FLUME_CONF_FILE=/var/tmp/flume.conf \
       -e FLUME_CONF_FILE_CONTENTS="`cat flume.conf`"

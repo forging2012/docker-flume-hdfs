@@ -1,25 +1,10 @@
-FROM debian:jessie
-MAINTAINER Alex Wilson a.wilson@alumni.warwick.ac.uk
-
-RUN apt-get update && apt-get install -q -y --no-install-recommends wget
-
-RUN mkdir /opt/java
-RUN wget --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" -qO- \
-  http://download.oracle.com/otn-pub/java/jdk/8u77-b03/jre-8u77-linux-x64.tar.gz \
-  | tar zxvf - -C /opt/java --strip 1
-
-RUN mkdir /opt/flume
-RUN wget -qO- http://archive.apache.org/dist/flume/1.6.0/apache-flume-1.6.0-bin.tar.gz \
-  | tar zxvf - -C /opt/flume --strip 1
+FROM probablyfine/flume
+MAINTAINER Loki Coyote loki@lokkju.com
 
 RUN mkdir /opt/hadoop
 RUN wget -qO- http://archive.apache.org/dist/hadoop/common/hadoop-2.4.0/hadoop-2.4.0.tar.gz \
-  | tar zxvf - -C /opt/hadoop --strip 1
+  | tar zxvf - -C /opt/hadoop --strip 1 hadoop-2.4.0/share/hadoop/hdfs/
 
 ADD start-flume.sh /opt/flume/bin/start-flume
 
 ENV FLUME_CLASSPATH="/opt/hadoop/share/hadoop/hdfs/"
-ENV JAVA_HOME /opt/java
-ENV PATH /opt/flume/bin:/opt/java/bin:$PATH
-
-CMD [ "start-flume" ]

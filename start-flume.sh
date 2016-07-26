@@ -5,6 +5,13 @@ FLUME_CONF_DIR=${FLUME_CONF_DIR:-/opt/flume/conf}
 [[ -z "${FLUME_CONF_FILE}"  ]] && { echo "FLUME_CONF_FILE required";  exit 1; }
 [[ -z "${FLUME_AGENT_NAME}" ]] && { echo "FLUME_AGENT_NAME required"; exit 1; }
 
+if [[ -v FLUME_CONF_FILE_CONTENTS ]]; then
+  echo "Using configuration from FLUME_CONF_FILE_CONTENTS"
+  echo "$FLUME_CONF_FILE_CONTENTS" > "${FLUME_CONF_FILE}"
+else
+  echo "Using configuration from ${FLUME_CONF_FILE}"
+fi
+
 echo "Starting flume agent : ${FLUME_AGENT_NAME}"
 
 flume-ng agent \
